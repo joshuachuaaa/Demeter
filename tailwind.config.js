@@ -9,8 +9,15 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        clock : ['Lexend', 'sans-serif'],
+        firacode : ['Fira Code', 'monospace'],
+        space: ['Space Mono', 'monospace'],
+        monoroboto: ['Roboto Mono', 'monospace']
+    },
   },
   plugins: [],
+}
 }
 

@@ -1,65 +1,83 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Lexend:wght@100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
 .loading-screen {
   @apply fixed inset-0 flex items-center justify-center bg-gray-50 dark:bg-gray-900;
 }
 
 .loading-text {
-  @apply text-2xl text-gray-700 dark:text-gray-200;
+  @apply text-2xl text-gray-700;
 }
 
 .dashboard-container {
-  @apply p-8;
+  @apply max-w-6xl mx-auto p-8;
 }
 
 .dashboard-title {
-  @apply text-3xl font-bold text-gray-900 dark:text-white mb-8;
+  @apply font-firacode font-normal text-5xl text-black ;
 }
 
-.stock-grid {
-  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6;
+.stock-list {
+  @apply space-y-4;
 }
 
-.stock-card {
-  @apply bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200;
+.stock-row {
+  @apply bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 p-4;
 }
 
-.stock-header {
-  @apply flex justify-between items-start mb-4;
+.stock-info-container {
+  @apply flex items-center gap-6 py-10;
 }
 
-.stock-symbol {
-  @apply text-xl font-semibold text-gray-900 dark:text-white;
+.stock-main-info{
+    @apply flex justify-between
+}
+
+.stock-logo {
+  @apply flex-shrink-0;
+}
+
+.stock-logo-image {
+  @apply w-12 h-12 rounded-full object-contain;
+}
+
+.stock-details {
+  @apply flex-1 flex items-center gap-4;
 }
 
 .stock-name {
-  @apply text-sm text-gray-500 dark:text-gray-400;
+  @apply font-space text-lg text-black font-normal;
+}
+
+.stock-symbol {
+  @apply font-space text-lg text-black;
 }
 
 .stock-price {
-  @apply text-2xl font-bold text-gray-900 dark:text-white mb-2;
+  @apply text-xl font-normal text-black font-space;
 }
 
 .stock-change {
-  @apply flex items-center;
+  @apply flex items-center font-space;
 }
 
 .stock-change.positive {
-  @apply text-green-600 dark:text-green-400;
+  @apply text-green-700 font-space;
 }
 
 .stock-change.negative {
-  @apply text-red-600 dark:text-red-400;
+  @apply text-red-700 font-space;
 }
 
 .change-amount {
-  @apply text-lg font-semibold;
+  @apply text-lg font-semibold font-space;
 }
 
 .change-percent {
-  @apply ml-2 text-sm;
+  @apply ml-2 text-sm font-space;
 }
 
 .pagination-container {
