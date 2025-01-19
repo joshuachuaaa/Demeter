@@ -1,6 +1,12 @@
+"use client"
+
+
 import { useEffect, useState } from 'react';
 import './loading.css';
-import logo from '../assets/logo.svg';
+
+const logoPath = '/logo.svg';
+
+
 
 interface LoadingProps {
   onLoadingComplete?: () => void;
@@ -21,7 +27,7 @@ const Loading = ({ onLoadingComplete }: LoadingProps) => {
   return (
     <div className={`loading-container ${!isLoading ? 'loading-container--hidden' : ''}`}>
       <img 
-        src={logo} 
+        src={logoPath} 
         alt="Logo"
         className="loading-logo"
       />

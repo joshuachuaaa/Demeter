@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.loading-screen {
+  @apply fixed inset-0 flex items-center justify-center bg-gray-50 dark:bg-gray-900;
+}
+
+.loading-text {
+  @apply text-2xl text-gray-700 dark:text-gray-200;
+}
+
+.dashboard-container {
+  @apply p-8;
+}
+
+.dashboard-title {
+  @apply text-3xl font-bold text-gray-900 dark:text-white mb-8;
+}
+
+.stock-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6;
+}
+
+.stock-card {
+  @apply bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200;
+}
+
+.stock-header {
+  @apply flex justify-between items-start mb-4;
+}
+
+.stock-symbol {
+  @apply text-xl font-semibold text-gray-900 dark:text-white;
+}
+
+.stock-name {
+  @apply text-sm text-gray-500 dark:text-gray-400;
+}
+
+.stock-price {
+  @apply text-2xl font-bold text-gray-900 dark:text-white mb-2;
+}
+
+.stock-change {
+  @apply flex items-center;
+}
+
+.stock-change.positive {
+  @apply text-green-600 dark:text-green-400;
+}
+
+.stock-change.negative {
+  @apply text-red-600 dark:text-red-400;
+}
+
+.change-amount {
+  @apply text-lg font-semibold;
+}
+
+.change-percent {
+  @apply ml-2 text-sm;
+}
+
+.pagination-container {
+  @apply mt-8 flex justify-center;
+}

@@ -1,8 +1,9 @@
 import Image from "next/image";
+import Loading from "./loading/loading";
+import Dashboard from "./dashboard/dashboard";
 
 export default function Home() {
   return (
-    <div className="text-5xl">
-      It's working    </div>
+    <><Loading /><Dashboard /></>
   );
 }
