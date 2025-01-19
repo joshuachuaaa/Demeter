@@ -1,27 +1,30 @@
 "use client"
 
-
 import { useEffect, useState } from 'react';
 import './loading.css';
 
 const logoPath = '/logo.svg';
 
-
-
 interface LoadingProps {
-  onLoadingComplete?: () => void;
+  onLoadingComplete: () => void;
 }
 
 const Loading = ({ onLoadingComplete }: LoadingProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const loadingTimer = setTimeout(() => {
       setIsLoading(false);
-      onLoadingComplete?.();
-    }, 2000); // 2 seconds for demo purposes
+    }, 2000);
 
-    return () => clearTimeout(timer);
+    const completeTimer = setTimeout(() => {
+      onLoadingComplete();
+    }, 2500); // Give extra time for the fade out animation
+
+    return () => {
+      clearTimeout(loadingTimer);
+      clearTimeout(completeTimer);
+    };
   }, [onLoadingComplete]);
 
   return (

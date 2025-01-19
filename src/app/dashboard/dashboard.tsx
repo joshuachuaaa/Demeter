@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import './dashboard.css';
 
 interface Stock {
   symbol: string;
@@ -43,53 +44,38 @@ export default function Dashboard() {
     <>
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: isLoading ? 1 : 0 }}
-        transition={{ duration: 0.5 }}
-        className="fixed inset-0 flex items-center justify-center bg-gray-50 dark:bg-gray-900"
-      >
-        <div className="text-2xl text-gray-700 dark:text-gray-200">
-          Loading...
-        </div>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
         animate={{ opacity: isLoading ? 0 : 1 }}
         transition={{ duration: 0.5 }}
-        className="p-8"
+        className="dashboard-container"
       >
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
+        <h1 className="dashboard-title">
           Stock Dashboard
         </h1>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+        <div className="stock-grid">
           {stocks.map((stock) => (
             <div 
               key={stock.symbol}
-              className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200"
+              className="stock-card"
             >
-              <div className="flex justify-between items-start mb-4">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+              <div className="stock-header">
+                <h3 className="stock-symbol">
                   {stock.symbol}
                 </h3>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
+                <span className="stock-name">
                   {stock.name}
                 </span>
               </div>
               
-              <div className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+              <div className="stock-price">
                 ${stock.price.toFixed(2)}
               </div>
               
-              <div className={`flex items-center ${
-                stock.change >= 0 
-                  ? 'text-green-600 dark:text-green-400' 
-                  : 'text-red-600 dark:text-red-400'
-              }`}>
-                <span className="text-lg font-semibold">
+              <div className={`stock-change ${stock.change >= 0 ? 'positive' : 'negative'}`}>
+                <span className="change-amount">
                   {stock.change >= 0 ? '+' : ''}{stock.change.toFixed(2)}
                 </span>
-                <span className="ml-2 text-sm">
+                <span className="change-percent">
                   ({stock.changePercent.toFixed(2)}%)
                 </span>
               </div>
@@ -97,8 +83,7 @@ export default function Dashboard() {
           ))}
         </div>
 
-        {/* Pagination can be added here */}
-        <div className="mt-8 flex justify-center">
+        <div className="pagination-container">
           {/* Add pagination controls as needed */}
         </div>
       </motion.div>
