@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import './dashboard.css';
 
 interface Stock {
@@ -11,6 +12,8 @@ interface Stock {
   change: number;
   changePercent: number;
 }
+
+const dashboardLogo = '/running-logo.svg'
 
 export default function Dashboard() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -47,7 +50,16 @@ export default function Dashboard() {
       transition={{ duration: 0.7 }}
       className="dashboard-container"
     >
-      <h1 className="dashboard-title">Stock Dashboard</h1>
+      <div className="dashboard-title">
+        <Image
+            src={dashboardLogo}
+            width={200}
+            height={50}
+            className='running-logo'
+            alt="Dashboard Logo" // Always include an alt attribute for accessibility
+            />
+        </div>
+      
       
       <div className="stock-list">
         {stocks.map((stock) => (

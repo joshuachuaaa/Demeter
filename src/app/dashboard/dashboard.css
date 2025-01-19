@@ -16,8 +16,13 @@
   @apply max-w-6xl mx-auto p-8;
 }
 
+.running-logo{
+    @apply w-[200px]
+}
+
+
 .dashboard-title {
-  @apply font-firacode font-normal text-5xl text-black ;
+  @apply font-firacode font-normal text-5xl text-black flex justify-center
 }
 
 .stock-list {
@@ -49,15 +54,15 @@
 }
 
 .stock-name {
-  @apply font-space text-lg text-black font-normal;
+  @apply font-space text-base xxs:text-lg text-black font-normal;
 }
 
 .stock-symbol {
-  @apply font-space text-lg text-black;
+  @apply font-space text-base xxs:text-lg text-black;
 }
 
 .stock-price {
-  @apply text-xl font-normal text-black font-space;
+  @apply text-base xxs:text-lg font-normal text-black font-space;
 }
 
 .stock-change {
@@ -65,19 +70,19 @@
 }
 
 .stock-change.positive {
-  @apply text-green-700 font-space;
+  @apply text-green-700 font-space text-sm xxs:text-lg;
 }
 
 .stock-change.negative {
-  @apply text-red-700 font-space;
+  @apply text-red-700 font-space text-sm xxs:text-lg;
 }
 
 .change-amount {
-  @apply text-lg font-semibold font-space;
+  @apply font-semibold font-space text-base xxs:text-lg;
 }
 
 .change-percent {
-  @apply ml-2 text-sm font-space;
+  @apply ml-2 text-xs xxs:text-sm font-space;
 }
 
 .pagination-container {
