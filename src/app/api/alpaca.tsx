@@ -1,6 +1,4 @@
-const ALPACA_API_KEY = process.env.NEXT_PUBLIC_ALPACA_API_KEY;
-const ALPACA_SECRET_KEY = process.env.NEXT_PUBLIC_ALPACA_SECRET_KEY;
-const BASE_URL = 'https://data.alpaca.markets/v2';
+import axios from 'axios';
 
 export interface StockData {
   symbol: string;
@@ -12,72 +10,84 @@ export interface StockData {
 }
 
 // Common company names mapping
-const COMPANY_NAMES: { [key: string]: string } = {
+export const COMPANY_NAMES: { [key: string]: string } = {
   'AAPL': 'Apple Inc.',
-  'GOOGL': 'Alphabet Inc.',
-  'MSFT': 'Microsoft Corporation',
-  'AMZN': 'Amazon.com Inc.',
-  'META': 'Meta Platforms Inc.',
-  'TSLA': 'Tesla Inc.',
-  'NVDA': 'NVIDIA Corporation',
-  'JPM': 'JPMorgan Chase & Co.',
-  'V': 'Visa Inc.',
-  'WMT': 'Walmart Inc.',
-  'JNJ': 'Johnson & Johnson',
-  'PG': 'Procter & Gamble Co.',
-  'MA': 'Mastercard Inc.',
-  'UNH': 'UnitedHealth Group Inc.',
-  'HD': 'Home Depot Inc.'
+//   'GOOGL': 'Alphabet Inc.',
+//   'MSFT': 'Microsoft Corporation',
+//   'AMZN': 'Amazon.com Inc.',
+//   'META': 'Meta Platforms Inc.',
+//   'TSLA': 'Tesla Inc.',
+//   'NVDA': 'NVIDIA Corporation',
+//   'JPM': 'JPMorgan Chase & Co.',
+//   'V': 'Visa Inc.',
+//   'MA': 'Mastercard Inc.',
 };
 
 export const TRACKED_STOCKS = Object.keys(COMPANY_NAMES);
 
-export const alpacaService = {
+class AlpacaService {
+  private readonly apiKey: string;
+  private readonly secretKey: string;
+  private readonly baseUrl: string;
+
+  constructor() {
+    this.apiKey = process.env.NEXT_PUBLIC_ALPACA_API_KEY || '';
+    this.secretKey = process.env.NEXT_PUBLIC_ALPACA_SECRET_KEY || '';
+    this.baseUrl = 'https://data.alpaca.markets/v2';
+  }
+
+  async getAppleStock(): Promise<number | null> {
+    try {
+      const response = await axios.get(`${this.baseUrl}/stocks/AAPL/trades/latest`, {
+        headers: {
+          'APCA-API-KEY-ID': this.apiKey,
+          'APCA-API-SECRET-KEY': this.secretKey,
+        }
+      });
+
+      console.log('Alpaca Response:', response.data); // Let's see what we get back
+      return response.data.trade.p || null;
+    } catch (error) {
+      console.error('Error fetching Apple stock:', error);
+      return null;
+    }
+  }
+
   async getStockQuote(symbol: string): Promise<StockData | null> {
     try {
-      const response = await fetch(
-        `${BASE_URL}/stocks/${symbol}/trades/latest`, {
-          headers: {
-            'APCA-API-KEY-ID': ALPACA_API_KEY!,
-            'APCA-API-SECRET-KEY': ALPACA_SECRET_KEY!
-          }
+      const response = await axios.get(`${this.baseUrl}/stocks/${symbol}/trades/latest`, {
+        headers: {
+          'APCA-API-KEY-ID': this.apiKey,
+          'APCA-API-SECRET-KEY': this.secretKey,
         }
-      );
-      const data = await response.json();
-      
-      // Get previous day's close
-      const prevDay = await fetch(
-        `${BASE_URL}/stocks/${symbol}/bars/1Day?limit=2`, {
-          headers: {
-            'APCA-API-KEY-ID': ALPACA_API_KEY!,
-            'APCA-API-SECRET-KEY': ALPACA_SECRET_KEY!
-          }
-        }
-      );
-      const barData = await prevDay.json();
-      
-      const currentPrice = data.trade.p;
-      const previousClose = barData.bars[0].c;
-      const change = currentPrice - previousClose;
-      const changePercent = (change / previousClose) * 100;
+      });
 
+      const trade = response.data.trade;
+      
       return {
         symbol,
         name: COMPANY_NAMES[symbol],
-        price: currentPrice,
-        change,
-        changePercent,
-        logo: `/logos/${symbol.toLowerCase()}.svg` // Assuming you have logo files
+        price: trade.p,
+        change: trade.price_change,
+        changePercent: trade.price_change_percent,
+        logo: `/logos/${symbol.toLowerCase()}.svg`
       };
     } catch (error) {
       console.error(`Error fetching data for ${symbol}:`, error);
       return null;
     }
-  },
+  }
 
   async getAllStockData(): Promise<StockData[]> {
-    const promises = TRACKED_STOCKS.map(symbol => this.getStockQuote(symbol));
-    const results = await Promise.all(promises);
-    return results.filter((result): result is StockData => result !== null);
+    try {
+      const promises = TRACKED_STOCKS.map(symbol => this.getStockQuote(symbol));
+      const results = await Promise.all(promises);
+      return results.filter((result): result is StockData => result !== null);
+    } catch (error) {
+      console.error('Error in getAllStockData:', error);
+      return [];
+    }
   }
-}; 
+}
+
+export const alpacaService = new AlpacaService(); 
