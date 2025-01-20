@@ -38,26 +38,6 @@ class AlpacaService {
     return []; // Return an empty array in case of an error
   }
 }
-  
-
 }
 
-
 export const alpacaService = new AlpacaService(); 
-
-// async getAppleStock(): Promise<number | null> {
-//   try {
-//     const response = await axios.get(`${this.baseUrl}/stocks/AAPL/trades/latest`, {
-//       headers: {
-//         'APCA-API-KEY-ID': this.apiKey,
-//         'APCA-API-SECRET-KEY': this.secretKey,
-//       }
-//     });
-
-//     console.log('Alpaca Response:', response.data); // Let's see what we get back
-//     return response.data.trade.p || null;
-//   } catch (error) {
-//     console.error('Error fetching Apple stock:', error);
-//     return null;
-//   }
-// }
