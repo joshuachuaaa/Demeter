@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { StockData, TRACKED_STOCKS, alpacaService } from '../api/alpaca';
+import { TRACKED_STOCKS, alpacaService } from '../api/alpaca';
 import './dashboard.css';
+import { StockSubject } from '../stock/stocktypes';
 
 export default function Dashboard() {
-  const [stocks, setStocks] = useState<StockData[]>([]);
+  const [stocks, setStocks] = useState<StockSubject[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
