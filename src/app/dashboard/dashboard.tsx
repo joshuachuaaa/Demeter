@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { TRACKED_STOCKS, alpacaService } from '../api/alpaca';
+import { alpacaService } from '../api/alpaca';
 import './dashboard.css';
 import { StockSubject } from '../stock/stocktypes';
 
