@@ -10,13 +10,6 @@ export default function Dashboard() {
   const [stocks, setStocks] = useState<StockSubject[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const stocksPerPage: number = 10;
-
-  // Calculate visible stock symbols
-  const startIndex = (currentPage - 1) * stocksPerPage;
-  const endIndex = startIndex + stocksPerPage;
-  const visibleSymbols = TRACKED_STOCKS.slice(startIndex, endIndex);
 
   useEffect(() => {
     const fetchVisibleStocks = async () => {
@@ -91,14 +84,14 @@ export default function Dashboard() {
 
                   <div className="stock-price-info">
                     <div className="stock-price">
-                      ${stock.price.toFixed(2)}
+                      ${stock.currentPrice.toFixed(2)}
                     </div>
-                    <div className={`stock-change ${stock.change >= 0 ? 'positive' : 'negative'}`}>
+                    <div className={`stock-change ${stock.currentPrice >= 0 ? 'positive' : 'negative'}`}>
                       <span className="change-amount">
-                        {stock.change >= 0 ? '+' : ''}{stock.change.toFixed(2)}
+                        {stock.price_change >= 0 ? '+' : ''}{stock.currentPrice.toFixed(2)}
                       </span>
                       <span className="change-percent">
-                        ({stock.changePercent.toFixed(2)}%)
+                        ({stock.price_change.toFixed(2)}%)
                       </span>
                     </div>
                   </div>
@@ -106,30 +99,6 @@ export default function Dashboard() {
               </div>
             ))}
           </div>
-
-          {Math.ceil(TRACKED_STOCKS.length / stocksPerPage) > 1 && (
-            <div className="pagination-container">
-              <button 
-                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                disabled={currentPage === 1}
-                className="pagination-button"
-              >
-                Previous
-              </button>
-              <span className="pagination-info">
-                Page {currentPage} of {Math.ceil(TRACKED_STOCKS.length / stocksPerPage)}
-              </span>
-              <button 
-                onClick={() => setCurrentPage(prev => 
-                  Math.min(prev + 1, Math.ceil(TRACKED_STOCKS.length / stocksPerPage))
-                )}
-                disabled={currentPage === Math.ceil(TRACKED_STOCKS.length / stocksPerPage)}
-                className="pagination-button"
-              >
-                Next
-              </button>
-            </div>
-          )}
         </>
       )}
     </motion.div>
