@@ -16,7 +16,31 @@ class AlpacaService {
     this.baseUrl = 'https://data.alpaca.markets/v2';
   }
 
-  async initializeStocks() : Promise<StockSubject[] | null>{
+  async getPreviousDayClose() : Promise<StockSubject[] | null>{
+    try {
+      const updatedStocks = Promise.all(
+        TRACKED_STOCKS.map(async (trackedStock)=>{
+          const response = await axios.get(`${this.baseUrl}/stocks/${trackedStock.symbol}/bars`, {
+            headers: {
+              'APCA-API-KEY-ID': this.apiKey,
+              'APCA-API-SECRET-KEY': this.secretKey,
+            }
+          });
+          return {
+            ...trackedStock,
+            yesterday_closing:response.data.bars.c
+          }
+        })
+      )
+      return updatedStocks;
+      }
+      catch(error){
+        console.error("Error fetching yesterday's closing");
+      }
+    
+}
+
+  async updateStockPrices() {
     try {
       const updatedStocks = Promise.all(
         TRACKED_STOCKS.map(async (trackedStock)=>{
@@ -26,35 +50,23 @@ class AlpacaService {
               'APCA-API-SECRET-KEY': this.secretKey,
             }
           });
+          const currentPrice = response.data.trade.p
+          const yesterdayClosing = trackedStock.yesterday_closing ?? 0;
+          const price_change = currentPrice - yesterdayClosing;
+          const price_change_percent = (price_change /yesterdayClosing) * 100
+
           return {
             ...trackedStock,
-            currentPrice:response.data.trade.p
+            currentPrice,
+            price_change,
+            price_change_percent
           }
         })
     )
     return updatedStocks;
   } catch (error) {
-    console.error('Error initializing stocks:', error);
+    console.error('Error updating stocks:', error);
     return []; // Return an empty array in case of an error
   }
 }
-}
-
 export const alpacaService = new AlpacaService(); 
-
-// async getAppleStock(): Promise<number | null> {
-//   try {
-//     const response = await axios.get(`${this.baseUrl}/stocks/AAPL/trades/latest`, {
-//       headers: {
-//         'APCA-API-KEY-ID': this.apiKey,
-//         'APCA-API-SECRET-KEY': this.secretKey,
-//       }
-//     });
-
-//     console.log('Alpaca Response:', response.data); // Let's see what we get back
-//     return response.data.trade.p || null;
-//   } catch (error) {
-//     console.error('Error fetching Apple stock:', error);
-//     return null;
-//   }
-// }
