@@ -36,6 +36,7 @@ class AlpacaService {
       }
       catch(error){
         console.error("Error fetching yesterday's closing");
+        return null;
       }
     
 }
@@ -68,5 +69,6 @@ class AlpacaService {
     console.error('Error updating stocks:', error);
     return []; // Return an empty array in case of an error
   }
+}
 }
 export const alpacaService = new AlpacaService(); 
