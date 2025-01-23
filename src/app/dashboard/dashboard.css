@@ -46,7 +46,7 @@
 }
 
 .stock-logo-image {
-  @apply w-12 h-12 rounded-full object-contain;
+  @apply w-12 h-12 object-contain;
 }
 
 .stock-details {

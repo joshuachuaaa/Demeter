@@ -18,6 +18,11 @@ export const STOCKS_LIST: StockSubject[] = [
     symbol: "GOOGL",
   },
   {
+    logo: "stock-logos/nvda.svg",
+    name: "NVIDIA Corporation",
+    symbol: "NVDA",
+  },
+  {
     logo: "stock-logos/amzn.svg",
     name: "Amazon.com, Inc.",
     symbol: "AMZN",
@@ -31,11 +36,6 @@ export const STOCKS_LIST: StockSubject[] = [
     logo: "stock-logos/nflx.svg",
     name: "Netflix, Inc.",
     symbol: "NFLX",
-  },
-  {
-    logo: "stock-logos/nvda.svg",
-    name: "NVIDIA Corporation",
-    symbol: "NVDA",
   },
   {
     logo: "stock-logos/meta.svg",
