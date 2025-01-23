@@ -41,15 +41,5 @@ export const STOCKS_LIST: StockSubject[] = [
     logo: "stock-logos/meta.svg",
     name: "Meta Platforms, Inc.",
     symbol: "META",
-  },
-  {
-    logo: "stock-logos/brkb.svg",
-    name: "Berkshire Hathaway Inc.",
-    symbol: "BRK.B",
-  },
-  {
-    logo: "stock-logos/jnj.svg",
-    name: "Johnson & Johnson",
-    symbol: "JNJ",
-  },
+  }
 ];
