@@ -1,50 +1,26 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { alpacaService } from '../api/alpaca';
 
-interface MarketSchedule {
-  timestamp: string;
+interface MarketData {
   is_open: boolean;
   next_open: string;
   next_close: string;
+  local_time: string;
+  last_updated: string;
 }
 
 export default function TestPage() {
-  const [isMarketOpen, setIsMarketOpen] = useState<boolean | null>(null);
-  const [marketSchedule, setMarketSchedule] = useState<MarketSchedule | null>(null);
-  const [currentTime, setCurrentTime] = useState<string>('');
+  const [marketData, setMarketData] = useState<MarketData | null>(null);
   const [error, setError] = useState<string | null>(null);
-
-  // Update current time every second
-  useEffect(() => {
-    const updateTime = () => {
-      const options: Intl.DateTimeFormatOptions = {
-        timeZone: 'America/New_York',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-        hour12: true,
-      };
-      setCurrentTime(new Date().toLocaleTimeString('en-US', options));
-    };
-
-    // Set initial time
-    updateTime();
-
-    const timer = setInterval(updateTime, 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   // Check market status every minute
   useEffect(() => {
     const checkMarketStatus = async () => {
       try {
-        const isOpen = await alpacaService.isMarketOpen();
-        const schedule = await alpacaService.getMarketSchedule();
-        
-        setIsMarketOpen(isOpen);
-        setMarketSchedule(schedule);
+        const response = await fetch('http://localhost:8000/api/market');
+        const data = await response.json();
+        setMarketData(data);
       } catch (err) {
         console.error('Error checking market status:', err);
         setError(err instanceof Error ? err.message : 'Unknown error');
@@ -76,33 +52,31 @@ export default function TestPage() {
       <h1 className="text-2xl mb-4">Market Status Test</h1>
       
       <div className="space-y-4">
-        <div className="p-4 border rounded-lg">
-          <h2 className="text-xl mb-2">Current Time (ET)</h2>
-          <p className="text-lg font-mono">
-            {currentTime || 'Loading...'}
-          </p>
-        </div>
-
-        <div className="p-4 border rounded-lg">
-          <h2 className="text-xl mb-2">Market Status</h2>
-          {isMarketOpen === null ? (
-            <p>Loading...</p>
-          ) : (
-            <p className={`text-lg font-semibold ${isMarketOpen ? 'text-green-600' : 'text-red-600'}`}>
-              Market is currently {isMarketOpen ? 'OPEN' : 'CLOSED'}
-            </p>
-          )}
-        </div>
-
-        {marketSchedule && (
-          <div className="p-4 border rounded-lg">
-            <h2 className="text-xl mb-2">Schedule Information (ET)</h2>
-            <div className="space-y-2">
-              <p><strong>API Time:</strong> {formatDateTime(marketSchedule.timestamp)}</p>
-              <p><strong>Next Open:</strong> {formatDateTime(marketSchedule.next_open)}</p>
-              <p><strong>Next Close:</strong> {formatDateTime(marketSchedule.next_close)}</p>
+        {marketData && (
+          <>
+            <div className="p-4 border rounded-lg">
+              <h2 className="text-xl mb-2">Local Time (ET)</h2>
+              <p className="text-lg font-mono">
+                {marketData.local_time}
+              </p>
             </div>
-          </div>
+
+            <div className="p-4 border rounded-lg">
+              <h2 className="text-xl mb-2">Market Status</h2>
+              <p className={`text-lg font-semibold ${marketData.is_open ? 'text-green-600' : 'text-red-600'}`}>
+                Market is currently {marketData.is_open ? 'OPEN' : 'CLOSED'}
+              </p>
+            </div>
+
+            <div className="p-4 border rounded-lg">
+              <h2 className="text-xl mb-2">Schedule Information (ET)</h2>
+              <div className="space-y-2">
+                <p><strong>Last Updated:</strong> {formatDateTime(marketData.last_updated)}</p>
+                <p><strong>Next Open:</strong> {formatDateTime(marketData.next_open)}</p>
+                <p><strong>Next Close:</strong> {formatDateTime(marketData.next_close)}</p>
+              </div>
+            </div>
+          </>
         )}
 
         {error && (
@@ -113,4 +87,4 @@ export default function TestPage() {
       </div>
     </div>
   );
-} 
+}
