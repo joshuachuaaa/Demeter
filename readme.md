@@ -30,7 +30,9 @@ Pactolus is a powerful multi-agent AI application designed to provide actionable
   - Alpaca Markets WebSocket for real-time price streaming.
   - REST APIs to fetch and track stock market data.
   - Yahoo Finance API for news retrieval.
-- **Multi-Agent System**: Implemented custom logic using DeepSeek R1 and V3 to manage financial insights and advisory systems.
+- **Multi-Agent System**: 
+  - DeepSeek V3 for fetching financial data.
+  - DeepSeek R1 for consolidating the data and coming up with a comprehensive analysis.
 
 ---
 
@@ -47,20 +49,18 @@ Follow these steps to run Pactolus locally:
    ```bash
    git clone https://github.com/YOUR_USERNAME/Pactolus-Multi-Agentic-AI-Insights.git
    cd Pactolus-Multi-Agentic-AI-Insights/backend
-   
+
 2. Create a virtual environment:
 
    ```bash
    python -m venv env
    source env/bin/activate  # On Windows, use `env\Scripts\activate`
 
-```markdown
 3. Install dependencies:
 
    ```bash
    pip install -r requirements.txt
 
-```markdown
 4. Set up environment variables:
    - Create a `.env` file and include your Alpaca API credentials:
 
@@ -78,7 +78,6 @@ Follow these steps to run Pactolus locally:
 
 ### **Frontend Setup**
 
-```markdown
 1. Navigate to the frontend folder:
 
    ```bash
@@ -89,13 +88,11 @@ Follow these steps to run Pactolus locally:
    ```bash
    npm install
 
-```markdown
 3. Run the Next.js development server:
 
    ```bash
    npm run dev
 
-```markdown
 4. Access the app at `http://localhost:3000`.
 
 
