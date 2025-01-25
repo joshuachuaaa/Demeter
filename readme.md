@@ -47,3 +47,55 @@ Follow these steps to run Pactolus locally:
    ```bash
    git clone https://github.com/YOUR_USERNAME/Pactolus-Multi-Agentic-AI-Insights.git
    cd Pactolus-Multi-Agentic-AI-Insights/backend
+   
+2. Create a virtual environment:
+
+   ```bash
+   python -m venv env
+   source env/bin/activate  # On Windows, use `env\Scripts\activate`
+
+```markdown
+3. Install dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+
+```markdown
+4. Set up environment variables:
+   - Create a `.env` file and include your Alpaca API credentials:
+
+     ```env
+     ALPACA_API_KEY=your_api_key
+     ALPACA_SECRET_KEY=your_secret_key
+     ```
+     
+5. Start the FastAPI server:
+
+   ```bash
+   uvicorn app.main:app --reload
+
+---
+
+### **Frontend Setup**
+
+```markdown
+1. Navigate to the frontend folder:
+
+   ```bash
+   cd ../frontend
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+
+```markdown
+3. Run the Next.js development server:
+
+   ```bash
+   npm run dev
+
+```markdown
+4. Access the app at `http://localhost:3000`.
+
+
