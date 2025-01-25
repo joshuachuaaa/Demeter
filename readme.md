@@ -7,6 +7,9 @@ Pactolus is a powerful multi-agent AI application designed to provide actionable
 
 ---
 
+## Progress
+[Development In Progress!]
+
 ## Features
 - **Real-Time Stock Prices**: Leveraging Alpaca Markets WebSocket to display live stock prices.
 - **AI-Powered Insights**: Multi-agent system that:
@@ -23,6 +26,7 @@ Pactolus is a powerful multi-agent AI application designed to provide actionable
 - **Framework**: Next.js (React-based).
 - **Styling**: Tailwind CSS for a modern and responsive UI.
 - **Real-Time Updates**: Live price feeds integrated into an interactive and intuitive dashboard.
+- **Deployment** : Will eventually be deployed on Vercel
 
 ### **Backend**
 - **Framework**: FastAPI for building high-performance APIs.
@@ -33,6 +37,8 @@ Pactolus is a powerful multi-agent AI application designed to provide actionable
 - **Multi-Agent System**: 
   - DeepSeek V3 for fetching financial data.
   - DeepSeek R1 for consolidating the data and coming up with a comprehensive analysis.
+- **Deployment**
+  - Will leverage Railway as an endpoint
 
 ---
 
