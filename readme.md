@@ -3,7 +3,7 @@
 ## Overview
 Pactolus is a powerful multi-agent AI application designed to provide actionable insights into the stock market. By integrating advanced AI-driven advisory agents with real-time market data, Pactolus helps users make informed financial decisions. The app utilizes a sophisticated stack to consolidate stock prices, analyze financial metrics, and track market trends seamlessly.
 
-![Pactolus Dashboard](https://via.placeholder.com/800x400?text=Dashboard+Preview)
+![Pactolus Dashboard]([link - to be added later])
 
 ---
 
